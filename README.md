@@ -1,37 +1,56 @@
-# AWS serverless patterns
+# ImageInsight
 
-This repo contains serverless patterns showing how to integrate services using infrastructure-as-code (IaC). You can use these patterns to help develop your own projects quickly.
+![Workflow](/ImageInsightsWorkflow.png)
 
-- Learn more about these patterns at https://serverlessland.com/patterns.
-- To learn more about submitting a pattern, read the [publishing guidelines page](https://github.com/aws-samples/serverless-patterns/blob/main/PUBLISHING.md).
+## Overview
+This project is a serverless application that uses AWS services to provide image description based on AWS Rekognition and Bedrock services. It's designed to help you analyze and describe the content of images.
 
-Important: this application uses various AWS services and there are costs associated with these services after the Free Tier usage - please see the [AWS Pricing page](https://aws.amazon.com/pricing/) for details. You are responsible for any AWS costs incurred. No warranty is implied in this example.
+## Features
+- Automatic image description using AWS Rekognition.
+- Serverless architecture for cost-efficiency and scalability.
+- API Gateway for easy integration with other services.
 
-## Requirements
+## Prerequisites
+Before you begin, ensure you have the following prerequisites:
+- An AWS account.
+- AWS CLI configured with necessary access permissions.
+- AWS Serverless Application Model (AWS SAM) installed.
+- Python installed for local development.
 
-* AWS CLI already configured with Administrator permission
-
-## Deployment Instructions
-
-1. [Create an AWS account](https://portal.aws.amazon.com/gp/aws/developer/registration/index.html) if you do not already have one and login.
-
-1. [Install Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and [install the AWS Serverless Application Model CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html) on your local machine.
-
-1. Create a new directory and navigate to that directory in a terminal.
-
-1. Clone this repo
-
+## Getting Started
+1. Clone this repository.
+```bash
+git clone https://github.com/your-username/image-vision-project.git
+cd image-vision-project
 ```
-git clone https://github.com/aws-samples/serverless-patterns
+2. Deploy the serverless application using AWS SAM.
+```bash
+sam build
+sam deploy --guided --stack-name image-description-stack --capabilities CAPABILITY_NAMED_IAM
+```
+3. Your application is now deployed, and the API Gateway endpoint is available.
+
+## Usage
+You can use the provided API endpoint to get image descriptions. Send a PUT request to the endpoint with an image file as input. Replace `<api-gateway-url>` with the actual URL.
+Example using `curl`:
+```bash
+curl -X PUT -H "Content-Type: image/jpeg" --data-binary @your-image.jpg <api-gateway-url/bucket-name/object-name>
 ```
 
-Each subdirectory contains additional installation and usage instructions.
+Upon making the GET request to the same <api-gateway-url> you will be able to fetch the results.
+```bash
+curl -X GET <api-gateway-url/bucket-name/object-name>
+```
 
-## Ownership
+## Additional Configuration
+- Modify the Lambda function code to handle image description based on your specific use case.
+- Modify the code to use a custom bedrock model according to your requirements.
 
-This project is owned, managed, and maintained by the **AWS Serverless Developer Advocacy team**, consisting of James Beswick, Dave Boyne, Eric Johnson, Ben Smith, Marcia Villalba, and Julian Wood. To contact us, raise an issue on this repo.
+## Copyright
+Copyright 2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 
-----
-Copyright 2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+## Acknowledgments
+- This project was made possible by the AWS Serverless ecosystem and community contributions.
 
-SPDX-License-Identifier: MIT-0
+Happy image describing!
+```
